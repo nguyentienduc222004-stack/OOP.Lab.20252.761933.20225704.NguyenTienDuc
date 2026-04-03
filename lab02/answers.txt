@@ -1,0 +1,9 @@
+trả lời:
+	Không, Java không cho phép làm điều này.
+lí do:
+	trong java việc nạp chồng phương thức bao gồm cả hàm khởi tạo dựa trên danh sách tham số(số lượng và kiểu dữ lieu của tham số)
+
+	Vì cả "title" và "category" đều có kiểu dữ liệu là String, nên hai hàm khởi tạo DigitalVideoDisc(String title) và DigitalVideoDisc(String category) sẽ có chữ ký phương thức (signature) hoàn toàn giống hệt nhau.
+	 
+	Trình biên dịch Java sẽ không thể phân biệt được bạn đang muốn gọi hàm khởi tạo nào, dẫn đến lỗi biên dịch (compile error)
+	
