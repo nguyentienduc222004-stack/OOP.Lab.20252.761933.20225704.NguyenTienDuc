@@ -1,0 +1,33 @@
+CÂU TRẢ LỜI CHO CÁC CÂU HỎI Ở MỤC 12: SẮP XẾP GIỎ HÀNG (SORT MEDIA IN CART)
+
+Câu hỏi 1: Nếu sử dụng giao diện (interface) Comparable thay vì Comparator, thì lớp nào sẽ phải triển khai (implement) giao diện này?
+-> Trả lời:
+Lớp cha trừu tượng 'Media' sẽ phải triển khai giao diện Comparable (public abstract class Media implements Comparable<Media>). Khi lớp cha Media triển khai, tất cả các lớp con của nó bao gồm Book, DigitalVideoDisc, và CompactDisc đều sẽ tự động thừa hưởng cơ chế này và có thể so sánh trực tiếp được với nhau trong cùng một danh sách giỏ hàng.
+
+Câu hỏi 2: Trong các lớp đó, phương thức compareTo() nên được viết như thế nào để thể hiện đúng quy tắc sắp xếp mong muốn?
+-> Trả lời:
+Hàm compareTo() trong lớp Media sẽ cần so sánh thuộc tính tiêu đề (title) trước theo thứ tự bảng chữ cái (alphabet). Nếu tiêu đề giống hệt nhau, hàm sẽ tiếp tục so sánh thuộc tính giá tiền (cost) theo thứ tự giảm dần (giá cao hơn đứng trước).
+Đoạn code logic giả định bên trong lớp Media:
+@Override
+public int compareTo(Media other) {
+    // So sánh tiêu đề theo bảng chữ cái
+    int titleCompare = this.getTitle().compareTo(other.getTitle());
+    if (titleCompare != 0) {
+        return titleCompare;
+    }
+    // Nếu tiêu đề trùng nhau, so sánh giá tiền giảm dần
+    return Float.compare(other.getCost(), this.getCost());
+}
+
+Câu hỏi 3: Chúng ta có thể có hai quy tắc sắp xếp chạy song song (ví dụ: vừa xếp theo tiêu đề-giá tiền, vừa xếp theo giá tiền-tiêu đề) nếu chỉ sử dụng cách tiếp cận giao diện Comparable hay không? Vì sao?
+-> Trả lời:
+Không thể. Giao diện Comparable chỉ cho phép định nghĩa duy nhất một quy tắc sắp xếp mặc định (gọi là "thứ tự tự nhiên" - natural ordering) thông qua một hàm compareTo() duy nhất. Để hệ thống có thể thay đổi linh hoạt giữa nhiều quy tắc sắp xếp khác nhau theo lựa chọn của người dùng trên giao diện Menu, việc sử dụng giao diện Comparator là bắt buộc và tối ưu hơn hoàn toàn.
+
+Câu hỏi 4: Giả sử đĩa phim (DVDs) có một quy tắc sắp xếp hoàn toàn khác biệt so với các loại Media khác, đó là: xếp theo tiêu đề, sau đó đến thời lượng giảm dần (decreasing length), cuối cùng mới đến giá tiền. Bạn sẽ chỉnh sửa code của mình như thế nào để đáp ứng điều này?
+-> Trả lời:
+Để đáp ứng yêu cầu này, em sẽ thực hiện các bước sau:
+1. Tạo một lớp bộ so sánh chuyên biệt riêng cho DVD, ví dụ: 'MediaComparatorByTitleLengthCost' triển khai interface Comparator<Media>.
+2. Bên trong phương thức compare(Media m1, Media m2), đầu tiên so sánh m1 và m2 theo tiêu đề (title).
+3. Nếu tiêu đề bằng nhau, tiến hành ép kiểu (cast) hai đối tượng này về lớp 'Disc' (hoặc 'DigitalVideoDisc') để lấy thuộc tính thời lượng 'getLength()', rồi so sánh thời lượng theo thứ tự giảm dần.
+4. Nếu thời lượng vẫn bằng nhau, tiếp tục so sánh thuộc tính giá tiền 'getCost()'.
+5. Khai báo bộ so sánh này như một hằng số công khai (public static final) trong lớp Media hoặc DigitalVideoDisc để gọi sử dụng mỗi khi người dùng chọn sắp xếp riêng cho danh sách DVD: Collections.sort(itemsOrdered, DigitalVideoDisc.COMPARE_BY_TITLE_LENGTH_COST).
