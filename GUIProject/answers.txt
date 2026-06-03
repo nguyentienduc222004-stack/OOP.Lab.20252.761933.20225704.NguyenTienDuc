@@ -1,0 +1,19 @@
+1. So sánh các thành phần của Swing và AWT
+
+AWT và Swing đều là các thư viện dùng để xây dựng giao diện đồ họa trong Java.
+Cả hai đều có các thành phần tương tự nhau như container, component, layout manager và cơ chế xử lý sự kiện.
+
+Điểm giống nhau:
+- Đều dùng để tạo giao diện người dùng trong Java.
+- Đều có các thành phần giao diện như nút bấm, nhãn, ô nhập văn bản.
+- Đều hỗ trợ các layout manager để sắp xếp các component.
+- Đều sử dụng cơ chế event handling để xử lý hành động của người dùng.
+
+Điểm khác nhau:
+- AWT sử dụng các heavyweight component, còn Swing sử dụng các lightweight component.
+- Container cấp cao nhất trong AWT thường là Frame, còn trong Swing là JFrame.
+- Component trong AWT có tên như Label, Button, TextField.
+- Component tương ứng trong Swing có tên như JLabel, JButton, JTextField.
+- Các component của Swing thường bắt đầu bằng chữ J.
+- Trong Swing, các component thường được thêm vào content pane của JFrame thay vì thêm trực tiếp vào JFrame.
+- Swing cung cấp nhiều component phong phú và linh hoạt hơn AWT.
