@@ -1,9 +1,11 @@
 package hust.soict.dsai.aims.store;
 
 import java.util.ArrayList;
+
 import hust.soict.dsai.aims.media.Media;
 
 public class Store {
+
     private ArrayList<Media> itemsInStore = new ArrayList<Media>();
 
     // Hàm thêm sản phẩm vào cửa hàng
@@ -30,11 +32,18 @@ public class Store {
     public void printStore() {
         System.out.println("***********************STORE***********************");
         System.out.println("Available Items in Store:");
+
         int index = 1;
         for (Media media : itemsInStore) {
-            System.out.println(index + ". Media - " + media.getTitle() + " - " + media.getCategory() + ": " + media.getCost() + "$");
+            System.out.println(index + ". Media - " + media.toString());
             index++;
         }
+
         System.out.println("***************************************************");
+    }
+
+    // Getter dùng cho StoreScreen
+    public ArrayList<Media> getItemsInStore() {
+        return itemsInStore;
     }
 }

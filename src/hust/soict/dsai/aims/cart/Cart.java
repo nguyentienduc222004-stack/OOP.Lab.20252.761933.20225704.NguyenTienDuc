@@ -1,12 +1,14 @@
 package hust.soict.dsai.aims.cart;
 
-import java.util.ArrayList;
-
 import hust.soict.dsai.aims.media.Media;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Cart {
+
     public static final int MAX_NUMBERS_ORDERED = 20;
-    private ArrayList<Media> itemsOrdered = new ArrayList<Media>();
+
+    private ObservableList<Media> itemsOrdered = FXCollections.observableArrayList();
 
     // Hàm thêm sản phẩm chung
     public void addMedia(Media media) {
@@ -32,25 +34,31 @@ public class Cart {
         }
     }
 
-    // Hàm tính tổng tiền
     public float totalCost() {
-        float total = 0.0f;
+        float total = 0;
+
         for (Media media : itemsOrdered) {
             total += media.getCost();
         }
+
         return total;
     }
 
-    // Hàm in danh sách giỏ hàng
     public void printCart() {
         System.out.println("***********************CART***********************");
         System.out.println("Ordered Items:");
+
         int index = 1;
         for (Media media : itemsOrdered) {
-            System.out.println(index + ". Media - " + media.getTitle() + " - " + media.getCategory() + ": " + media.getCost() + "$");
+            System.out.println(index + ". " + media.toString());
             index++;
         }
-        System.out.println("Total cost: " + totalCost() + "$");
-        System.out.println("***************************************************");
+
+        System.out.println("Total cost: " + totalCost() + " $");
+        System.out.println("**************************************************");
+    }
+
+    public ObservableList<Media> getItemsOrdered() {
+        return itemsOrdered;
     }
 }

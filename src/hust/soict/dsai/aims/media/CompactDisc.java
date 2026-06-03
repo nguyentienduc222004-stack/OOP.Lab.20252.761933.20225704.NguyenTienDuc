@@ -1,5 +1,5 @@
 package hust.soict.dsai.aims.media;
-
+import hust.soict.dsai.aims.exception.PlayerException;
 import java.util.ArrayList;
 
 public class CompactDisc extends Disc implements Playable { // Kế thừa từ Disc để dùng lại id, title, category, cost, length, director
@@ -52,18 +52,16 @@ public class CompactDisc extends Disc implements Playable { // Kế thừa từ 
         return totalLength;
     }
     @Override
-    public void play() {
-        if (this.getLength() > 0) {
-            System.out.println("Playing CD: " + this.getTitle() + " by " + this.getArtist());
-            System.out.println("Total CD length: " + this.getLength());
-            System.out.println("-------------------------");
-            
-            // Vòng lặp gọi hàm play() của từng Track nhạc bên trong CD
-            for (Track track : tracks) {
-                track.play();
-            }
-        } else {
-            System.out.println("ERROR: CD \"" + this.getTitle() + "\" cannot be played (Total length is 0 or less).");
+    public void play() throws PlayerException {
+        if (this.getLength() <= 0) {
+            throw new PlayerException("ERROR: CD length is non-positive!");
+        }
+
+        System.out.println("Playing CD: " + this.getTitle());
+        System.out.println("CD length: " + this.getLength());
+
+        for (Track track : tracks) {
+            track.play();
         }
     }
 }
